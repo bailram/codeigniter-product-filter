@@ -12,53 +12,49 @@ class Product_model extends CI_MODEL
         return $this->db->get();
     }
 
-    function make_query($minimum_price, $maximum_price, $brand, $ram, $storage)
+    function make_query($keyword, $minimum_price, $maximum_price, $brand, $ram, $storage)
     {
         $query = "
         SELECT * FROM Product
         WHERE product_status = '1'
         ";
 
+        if($keyword != "") {
+            $query .= " AND product_name LIKE '%".$keyword."%'";
+        }
+
         if(isset($minimum_price, $maximum_price) && !empty($minimum_price) && !empty($maximum_price)) {
-            $query .= "
-             AND product_price BETWEEN '".$minimum_price."' AND '".$maximum_price."'
-            ";
+            $query .= " AND product_price BETWEEN '".$minimum_price."' AND '".$maximum_price."'";
         }
 
         if(isset($brand)) {
             $brand_filter = implode("','", $brand);
-            $query .= "
-             AND product_brand IN('".$brand_filter."')
-            ";
+            $query .= " AND product_brand IN('".$brand_filter."')";
         }
 
         if(isset($ram)) {
             $ram_filter = implode("','", $ram);
-            $query .= "
-             AND product_ram IN('".$ram_filter."')
-            ";
+            $query .= " AND product_ram IN('".$ram_filter."')";
         }
 
         if(isset($storage)) {
             $storage_filter = implode("','", $storage);
-            $query .= "
-             AND product_storage IN('".$storage_filter."')
-            ";
+            $query .= " AND product_storage IN('".$storage_filter."')";
         }
 
         return $query;
     }
 
-    function count_all($minimum_price, $maximum_price, $brand, $ram, $storage)
+    function count_all($keyword, $minimum_price, $maximum_price, $brand, $ram, $storage)
     {
-        $query = $this->make_query($minimum_price, $maximum_price, $brand, $ram, $storage);
+        $query = $this->make_query($keyword, $minimum_price, $maximum_price, $brand, $ram, $storage);
         $data = $this->db->query($query);
         return $data->num_rows();
     }
     
-    function fetch_data($limit, $start, $minimum_price, $maximum_price, $brand, $ram, $storage)
+    function fetch_data($limit, $start, $keyword, $minimum_price, $maximum_price, $brand, $ram, $storage)
     {
-        $query = $this->make_query($minimum_price, $maximum_price, $brand, $ram, $storage);
+        $query = $this->make_query($keyword, $minimum_price, $maximum_price, $brand, $ram, $storage);
         $query .= ' LIMIT '.$start.', '.$limit;
 
         $data = $this->db->query($query);
@@ -90,6 +86,6 @@ class Product_model extends CI_MODEL
             $output = '<h3 style="text-align: center">No Data Found</h3>';
         }
         return $output;
-    }
+    }    
 }
 ?>

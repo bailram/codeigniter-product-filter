@@ -1,9 +1,10 @@
 # Product filter using Ajax
-A simple website which is displaying a list of products and filtering product by price, brand, ram, and internal storage. This website build using Codeigniter 3, Bootstrap 3.3.6, and jQuery 2.2.0. This project is developed from [Web Lesson - Ajax Codeigniter Product Filter with Pagination](https://www.webslesson.info/2018/12/ajax-codeigniter-product-filter-with-pagination.html) and fixes the pagination bug.
+A simple website which is displaying a list of products and filtering product by price, brand, ram, and internal storage. This website build using Codeigniter 3, Bootstrap 3.3.6, and jQuery 2.2.0. This project is developed from [Web Lesson - Ajax Codeigniter Product Filter with Pagination](https://www.webslesson.info/2018/12/ajax-codeigniter-product-filter-with-pagination.html).
 
 ### Features
 - Display products
 - Filter product by price, brand, ram, and internal storage
+- Search product by name
 
 ### Screenshot
 ![index page](Screenshot/Screenshot1.png)

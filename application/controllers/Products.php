@@ -18,6 +18,7 @@ class Products extends CI_Controller {
 
     public function fetch_data()
     {
+        $keyword = $this->input->post('keyword');
         $minimum_price = $this->input->post('minimum_price');
         $maximum_price = $this->input->post('maximum_price');
         $brand = $this->input->post('brand');
@@ -26,7 +27,7 @@ class Products extends CI_Controller {
         $this->load->library('pagination');
         $config = array();
         $config["base_url"] = "#";        
-		$config["total_rows"] = $this->product_model->count_all($minimum_price, $maximum_price, $brand, $ram, $storage);
+		$config["total_rows"] = $this->product_model->count_all($keyword, $minimum_price, $maximum_price, $brand, $ram, $storage);
         $config['per_page'] = 8;		
         $config['uri_segment'] = 3;		
         $config['use_page_numbers'] = TRUE;		
@@ -55,6 +56,7 @@ class Products extends CI_Controller {
             'product_list' => $this->product_model->fetch_data(
                 $config["per_page"], 
                 $start,
+                $keyword,
                 $minimum_price,
                 $maximum_price,
                 $brand,
@@ -63,5 +65,5 @@ class Products extends CI_Controller {
             )
         );        
         echo json_encode($output);
-    }
+    }    
 }

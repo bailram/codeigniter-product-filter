@@ -10,9 +10,8 @@
     
     <!-- Bootstrap Core CSS -->    
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-    <link href = "<?php echo base_url(); ?>asset/jquery-ui.css" rel = "stylesheet">
-    <!-- Custom CSS -->
-    <link href="<?php echo base_url(); ?>asset/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">    
+    <!-- Custom CSS -->        
     <style>
         #loading {
             text-align: center;
@@ -30,7 +29,11 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-3">                
+            <div class="col-md-3">      
+                <div class="list-group">
+                    <h3>Search</h3>
+                    <input type="text" id="search" class="form-control" placeholder="search...">
+                </div>          
                 <div class="list-group">
                     <h3>Price</h3>
                     <input type="hidden" id="hidden_minimum_price" value="0" />
@@ -97,14 +100,19 @@
     </div>
     <!-- javascript cdn -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>      
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <script>
         $(document).ready(function () {            
+            var timer
+            var delay = 600
+
             filter_data(1) // get all data and display page 1
+
             function filter_data(page) {                
                 $('.filter_data').html("<div id='loading'></div>")
-                var action = 'fetch_data'
+                var action = 'fetch_data'                
+                var keyword = $('#search').val()
                 var minimum_price = $('#hidden_minimum_price').val()
                 var maximum_price = $('#hidden_maximum_price').val()
                 var brand = get_filter('brand')
@@ -115,7 +123,8 @@
                     method: "POST",
                     dataType: "JSON",
                     data: {
-                        action: action,
+                        action: action,                    
+                        keyword: keyword,
                         minimum_price: minimum_price,
                         maximum_price: maximum_price,
                         brand: brand,
@@ -146,7 +155,7 @@
                         $('.filter_data').html(msg)
                     },
                 })
-            }
+            }            
 
             function get_filter(class_name) {
                 var filter = []
@@ -182,6 +191,13 @@
                     $('#hidden_maximum_price').val(ui.values[1])
                     filter_data(1)
                 }
+            })
+
+            $('#search').bind('input', function() {
+                window.clearTimeout(timer)
+                timer = window.setTimeout(function() {                    
+                    filter_data(1)
+                }, delay)
             })
         })        
     </script>
