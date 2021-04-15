@@ -16,6 +16,7 @@ The logic of this project refers to this source <br>
 [Codeigniter 3](https://codeigniter.com/download)<br>
 [Bootstrap 3](https://getbootstrap.com/docs/3.4/getting-started/)<br>
 [Jquery 3](https://jquery.com)<br>
+[Web Lesson](https://www.webslesson.info/2018/12/ajax-codeigniter-product-filter-with-pagination.html)
 [Stackoverflow for issue click doesn't work on ajax generated content](https://stackoverflow.com/questions/9344306/jquery-click-doesnt-work-on-ajax-generated-content)<br>
 
 <hr>
