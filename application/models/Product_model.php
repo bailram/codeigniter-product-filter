@@ -63,13 +63,13 @@ class Product_model extends CI_MODEL
         if($data->num_rows() > 0) {
             foreach($data->result_array() as $row) {
                 $output .= '
-                <div class="col-sm-4 col lg-3 col-md-3">
+                <div class="col-sm-4 col-lg-3 col-md-3">
                     <div style="border: 1px solid #ccc; 
                         border-radius: 5px; padding: 16px;
                         margin-bottom: 16px; height:450px;">
                         <img src="'.base_url().'asset/images/'.$row['product_image'].'" alt="" class="img-responsive">
                         <p align="center">
-                            <strong><a href="#">'.$row['product_name'].'</a></strong>
+                            <strong><a class="btn-detail" data-id="'.$row['product_id'].'" style="cursor: pointer">'.$row['product_name'].'</a></strong>
                         </p>
                         <h4 style="text-align: center" class="text-danger">'.$row['product_price'].'</h4>
                         <p>
@@ -77,7 +77,7 @@ class Product_model extends CI_MODEL
                             Brand : '.$row['product_brand'].' <br/>
                             RAM : '.$row['product_ram'].' GB<br/>
                             Storage : '.$row['product_storage'].' GB<br/>
-                        </p>
+                        </p>                        
                     </div>
                 </div>
                 ';
@@ -87,5 +87,65 @@ class Product_model extends CI_MODEL
         }
         return $output;
     }    
+
+    function get_name($id)
+    {
+        $query = "SELECT product_name FROM product WHERE product_id = ".$id;
+        $data = $this->db->query($query);
+        $name = '';
+        if($data->num_rows() > 0) {
+            foreach($data->result_array() as $row) {
+                $name = $row['product_name'];
+            }
+        }
+        return $name;
+    }
+
+    function get_detail($id)
+    {
+        $query = "SELECT * FROM product WHERE product_id = ".$id;
+        $data = $this->db->query($query);
+        $output = "";
+        if($data->num_rows() > 0) {
+            foreach($data->result_array() as $row) {
+                $output = '
+                <div class="row">
+                    <div class="col-md-6">
+                        <img src="'.base_url().'asset/images/'.$row['product_image'].'" alt="" class="img-responsive">
+                    </div>                                        
+                    <div class="col-md-6">                            
+                        <h4 class="text-danger">14499.00</h4>
+                        <h5><b>Deksripsi</b></h5>
+                        <table>
+                            <tr>
+                                <td style="padding-right:30px">Camera</td>
+                                <td style="padding-right:30px">:</td>
+                                <td>'.$row['product_camera'].' MP </td>
+                            </tr>
+                            <tr>
+                                <td>Brand</td>
+                                <td>:</td>
+                                <td>'.$row['product_brand'].'</td>
+                            </tr>
+                            <tr>
+                                <td>RAM</td>
+                                <td>:</td>
+                                <td>'.$row['product_ram'].' GB</td>
+                            </tr>
+                            <tr>
+                                <td>Storage</td>
+                                <td>:</td>
+                                <td>'.$row['product_storage'].' GB</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                ';
+            }
+        } else {
+            $output = '<h3 style="text-align: center">No Data Found</h3>';
+        }
+        return $output;
+    }
 }
 ?>

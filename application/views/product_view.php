@@ -9,9 +9,9 @@
     <title>Product Filters in Codeigniter using Ajax</title>
     
     <!-- Bootstrap Core CSS -->    
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">    
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">    
-    <!-- Custom CSS -->        
+    <!-- Custom CSS -->                 
     <style>
         #loading {
             text-align: center;
@@ -20,7 +20,24 @@
         }
     </style>
 </head>
-<body>
+<body>    
+    <!-- Modal -->
+   <div class="modal fade" id="empModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title"></h4>
+                </div>
+            <div class="modal-body"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+   </div>    
+
     <!-- Page Content -->
     <div class="container">
         <div class="row">
@@ -98,10 +115,11 @@
             </div>
         </div>
     </div>
+    
     <!-- javascript cdn -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>      
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>        
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script> 
     <script>
         $(document).ready(function () {            
             var timer
@@ -193,12 +211,53 @@
                 }
             })
 
+
             $('#search').bind('input', function() {
                 window.clearTimeout(timer)
                 timer = window.setTimeout(function() {                    
                     filter_data(1)
                 }, delay)
             })
+            
+            $('.filter_data').on('click', '.btn-detail', function(){                
+                $('#empModal').modal('show')
+                $('.modal-body').html("<div id='loading'></div>")
+                var action = 'fetch_data'
+                var id = $(this).data('id')                
+                $.ajax({                               
+                    url: "<?=base_url()?>products/detail_data",
+                    method: "POST",
+                    dataType: "JSON",
+                    data: {
+                        action: action, 
+                        id: id
+                    },
+                    success: function(data) {                        
+                        $('.modal-body').html(data.product_detail)
+                        $('.modal-title').html(data.title)
+                    },
+                    error: function (jqXHR, exception) {
+                        var msg = '';
+                        if (jqXHR.status === 0) {
+                            msg = 'Not connect.\n Verify Network.';
+                        } else if (jqXHR.status == 404) {
+                            msg = 'Requested page not found. [404]';
+                        } else if (jqXHR.status == 500) {
+                            msg = 'Internal Server Error [500].';
+                        } else if (exception === 'parsererror') {
+                            msg = 'Requested JSON parse failed.';
+                        } else if (exception === 'timeout') {
+                            msg = 'Time out error.';
+                        } else if (exception === 'abort') {
+                            msg = 'Ajax request aborted.';
+                        } else {
+                            msg = 'Uncaught Error.\n' + jqXHR.responseText;
+                        }                        
+                        $('.modal-body').html(msg)
+                    },
+                })
+            })
+            
         })        
     </script>
 </body>

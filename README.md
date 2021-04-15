@@ -1,19 +1,22 @@
 # Product filter using Ajax
-A simple website which is displaying a list of products and filtering product by price, brand, ram, and internal storage. This website build using Codeigniter 3, Bootstrap 3.3.6, and jQuery 2.2.0. This project is developed from [Web Lesson - Ajax Codeigniter Product Filter with Pagination](https://www.webslesson.info/2018/12/ajax-codeigniter-product-filter-with-pagination.html).
+A simple website which is displaying a list of products and filtering product by price, brand, ram, and internal storage. This website build using Codeigniter 3, Bootstrap 3.4.1, and jQuery 3.5.1. This project is developed from [Web Lesson - Ajax Codeigniter Product Filter with Pagination](https://www.webslesson.info/2018/12/ajax-codeigniter-product-filter-with-pagination.html).
 
 ### Features
 - Display products
 - Filter product by price, brand, ram, and internal storage
 - Search product by name
+- View detail product
 
 ### Screenshot
 ![index page](Screenshot/Screenshot1.png)
+![Detail Product](Screenshot/Screenshot2.png)
 
 ### Note
 The logic of this project refers to this source <br>
 [Codeigniter 3](https://codeigniter.com/download)<br>
-[Bootstrap 3](https://getbootstrap.com/docs/3.3/)<br>
-[Jquery 2](https://jquery.com)<br>
+[Bootstrap 3](https://getbootstrap.com/docs/3.4/getting-started/)<br>
+[Jquery 3](https://jquery.com)<br>
+[Stackoverflow for issue click doesn't work on ajax generated content](https://stackoverflow.com/questions/9344306/jquery-click-doesnt-work-on-ajax-generated-content)<br>
 
 <hr>
 

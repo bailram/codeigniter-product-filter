@@ -66,4 +66,15 @@ class Products extends CI_Controller {
         );        
         echo json_encode($output);
     }    
+
+    public function detail_data()
+    {        
+        // $id = $this->uri->segment(3);
+        $id =  $this->input->post('id');
+        $output = array(
+            'title' => $this->product_model->get_name($id),
+            'product_detail' => $this->product_model->get_detail($id)
+        );
+        echo json_encode($output);
+    }
 }
